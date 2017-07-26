@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @ClassName: ZookeeperController
  * @Description:
@@ -21,18 +23,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Copyright: 2017 . All rights reserved.
  */
 @Controller
+@RequestMapping(value = "/test")
 public class ZookeeperController {
     @Autowired
-    private DiscoveryClient client;
+    private DiscoveryClient discoveryClient;
     @RequestMapping(value = "/show", method = {RequestMethod.GET})
     @ResponseBody
-    public ServerDTO show(@RequestParam(value="id") Long id) {
-        ServiceInstance instance = client.getLocalServiceInstance();
+    public String show(@RequestParam(value="id") Long id) {
+
+
+        List<ServiceInstance> list = discoveryClient.getInstances("services");
+        if (list != null && list.size() > 0 ) {
+            return list.get(0).getUri().toString();
+        }
+        return null;
+      /*  ServiceInstance instance = client.getLocalServiceInstance();
         ServerDTO dto = new ServerDTO();
         dto.setId(id);
         dto.setName("scott");
         dto.setAddress("北京");
-        return dto;
+        return dto;*/
     }
 }
 

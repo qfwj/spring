@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Contoller {
     @RequestMapping(value="/hello")
     public  String test(){
+        Watcher watcher =
         return "hello world";
     }
 }
