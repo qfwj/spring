@@ -1,0 +1,50 @@
+String cookieUrl = "";
+        ResponseEntity response= re.getForEntity(cookieUrl, String.class);
+        HttpHeaders headers = response.getHeaders();
+        String cookie = headers.get("Set-Cookie").get(0);
+        String loginUrl = "";
+        HttpHeaders liveHeader = new HttpHeaders();
+        liveHeader.add("Connection", "keep-alive");
+        liveHeader.add("Cookie", cookie.substring(0, cookie.indexOf(";") + 1) + "username=null; userpassword=null");
+       Map<String, String> formMap = new HashMap<String, String>();
+        formMap.put("userid","");
+        formMap.put("pwd","");
+
+        formMap.put("PORTAL_LANG","cn");
+        formMap.put("cmd","Login");*//**//**//**//*
+
+
+        MultiValueMap<String, String> requestEntity = new LinkedMultiValueMap<>();
+        requestEntity.add("userid","zhongbo");
+        requestEntity.add("pwd","Hanlei128");
+        requestEntity.add("PORTAL_LANG","cn");
+        requestEntity.add("cmd","Login");
+        ResponseEntity loginResponse = re.postForEntity(loginUrl, requestEntity, String.class  );
+        String sidStr = loginResponse.getBody().toString();
+        String sid = sidStr.substring(sidStr.indexOf("sid=") + 4, sidStr.indexOf("&cmd="));
+
+        /*进行HttpRequest设置*/
+        Map<String, String> formMap = new HashMap<String, String>();
+        ResponseEntity loginResponse = re.postForEntity(loginUrl, new HttpEntity(formMap, liveHeader), String.class  );
+
+        String listUrl = "http:?sid={sid}&cmd=Portal_Execute_MessageWorkFlowTransaction";
+
+        ResponseEntity listResponse = re.postForEntity(listUrl,  new HttpEntity(liveHeader), String.class, sid);
+        String listStr = listResponse.getBody().toString();
+
+
+       /*进行form表单填充提交*/
+        String detail = listStr.substring(listStr.indexOf("<table"), listStr.indexOf("/table>") + 7);
+        String numStr = detail.substring(detail.indexOf("onclick=\"openTask(frmMain,"), detail.indexOf(",'WorkFlow_Execute_Worklist_File_Open'"));
+        String[] numArr = numStr.split(",");
+        String detailUrl = "";
+
+
+
+        MultiValueMap<String, String> detailFormMap = new LinkedMultiValueMap<>();
+        detailFormMap.add("sid", sid);
+        detailFormMap.add("cmd","WorkFlow_Execute_Worklist_File_Open");
+        detailFormMap.add("task_id", numArr[1]);
+        detailFormMap.add("id", numArr[2]);
+        ResponseEntity detailResponse = re.postForEntity(detailUrl,  detailFormMap, String.class);
+        System.out.println("");
