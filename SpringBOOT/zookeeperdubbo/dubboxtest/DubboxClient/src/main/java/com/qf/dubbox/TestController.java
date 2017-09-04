@@ -5,6 +5,7 @@
 package com.qf.dubbox;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.I0Itec.zkclient.ZkClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
