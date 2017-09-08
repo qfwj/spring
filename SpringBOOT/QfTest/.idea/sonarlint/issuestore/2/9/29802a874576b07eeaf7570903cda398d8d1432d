@@ -1,0 +1,29 @@
+
+5squid:S2068" Remove this hard-coded password.(âÛ€ê
+Rsquid:S1197"8Move the array designator from the variable to the type.(ùï¾ÿÿÿÿÿ
+psquid:S3008"VRename this field "BEGIN_COUNT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨¾¨½ıÿÿÿÿ
+Ksquid:S1444"1Make this "public static BEGIN_COUNT" field final(¨¾¨½ıÿÿÿÿ
+8squid:S2095"Close this "FileOutputStream".(éÖŸæûÿÿÿÿ
+2squid:S2095"Close this "Connection".(ÕµÛüÿÿÿÿ
+9squid:S2095"Close this "PreparedStatement".(œ™ûøÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ãÛÍ–ÿÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(›¿äÅÿÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ã­ç†
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(õÓåşÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÅÀÈë
+_squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(®º
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ã‰˜üÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(÷êüÅşÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÈšÕúÿÿÿÿ
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(´‹¹öşÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(ÇéÙØ
+ˆ"squid:ClassVariableVisibilityCheck"WMake BEGIN_COUNT a static final constant or non-public and provide accessors if needed.(¨¾¨½ıÿÿÿÿ
+1squid:S1220""Move this file to a named package.
+Gsquid:S1905"-Remove this unnecessary cast to "Connection".(ÕµÛüÿÿÿÿ
+Nsquid:S1905"4Remove this unnecessary cast to "PreparedStatement".(œ™ûøÿÿÿÿ
+asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ŞíŞşÿÿÿÿ
+Tsquid:UselessImportCheck"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ
+[
+squid:S899"BDo something with the "boolean" value returned by "createNewFile".(£‡¤øÿÿÿÿ

@@ -1,0 +1,52 @@
+
+						LiveBeansView.registerApplicationContext(this);
+			10.resetCommonCaches(); 在finally中	
+
+7.afterRefresh()刷新之后			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+1.先初始化各种source文件；
+  
+ 在new（）时创建 
+   先创建Initializers 使用 setInitializers（getSpringFactoriesInstances（） ）方法
+  
+  创建listeners；使用setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
+  
+  
+  加载并创建Factory；"META-INF/spring.factories";  getSpringFactoriesInstances（）时调用 createSpringFactoriesInstances（）方法
+
+  在run(String... args)时，
+    先获取Listeners： SpringApplicationRunListeners listeners = getRunListeners(args);；并触发new ApplicationStartedEvent 对应的listeners.starting();
+
+
+2.environment配置：
+
+在prepareEnvironment方法中
+先配置property、再configureProfiles;
+
+然后触发new ApplicationEnvironmentPreparedEvent事件
