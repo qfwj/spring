@@ -18,12 +18,13 @@ import java.util.Set;
  * @Copyright: 2017 . All rights reserved.
  */
 
-@NodeEntity
+@NodeEntity(label =  "movie")
 public class Movie {
     @GraphId
     Long id;
     String title;
 
+    @Relationship(type = "从属", direction = Relationship.OUTGOING)
     Person director;
 
     /**
@@ -58,24 +59,24 @@ public class Movie {
         this.director = director;
     }
 
-    /**
+/*    *//**
      * 获取 actors
      *
      * @return actors
-     */
+     *//*
     public Set<Person> getActors() {
         return actors;
     }
 
-    /**
+    *//**
      * 设置 actors
-     */
+     *//*
     public void setActors(Set<Person> actors) {
         this.actors = actors;
     }
 
     @Relationship(type = "ACTS_IN", direction = Relationship.INCOMING)
-    Set<Person> actors;
+    Set<Person> actors;*/
 
     /*@Relationship(type = "RATED")
     List<Rating> ratings;*/

@@ -3,7 +3,16 @@
         config.driverConfiguration()
                 .setDriverClassName("org.neo4j.ogm.drivers.http.driver.HttpDriver")
                 .setURI("http://neo4j:hanlei128@192.168.239.128:7474");  密码的传入格式
+官网的这个配置是不对的
+
 
 2.实体类映射
 
 注意加label标签，否则无效
+
+3.创建关系
+直接使用 @Relationship(type = "从属", direction = Relationship.OUTGOING)
+
+4.删除
+
+match(n) delete n;

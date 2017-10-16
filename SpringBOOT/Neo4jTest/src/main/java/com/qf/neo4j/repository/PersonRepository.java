@@ -23,6 +23,12 @@ public interface PersonRepository extends GraphRepository<Person> {
 
     /*@Query("match(n:person) return n")*/
     Person getPersonByName(@Param("name") String name);
+
+    @Query("MATCH (user:person {name:{name}}) delete user")
+
+    /*@Query("match(n:person) return n")*/
+    void deletePersonByName(@Param("name") String name);
+
 }
 
 
