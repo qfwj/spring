@@ -1,0 +1,9 @@
+1、neo4j账号密码
+ org.neo4j.ogm.config.Configuration config = new org.neo4j.ogm.config.Configuration();
+        config.driverConfiguration()
+                .setDriverClassName("org.neo4j.ogm.drivers.http.driver.HttpDriver")
+                .setURI("http://neo4j:hanlei128@192.168.239.128:7474");  密码的传入格式
+
+2.实体类映射
+
+注意加label标签，否则无效
