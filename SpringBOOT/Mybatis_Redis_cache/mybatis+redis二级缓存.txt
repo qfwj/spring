@@ -1,0 +1,91 @@
+1 添加rediscache代码implements Cache
+
+
+package com.puhui.decision.cache;
+
+/**
+* Created by fanpu on 2017/11/2.
+*/
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import com.puhui.decision.utils.SpringApplicationContextHolder;
+import org.apache.ibatis.cache.Cache;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+
+/**
+* @author guoruifeng
+* 配置于Mybatis的Mapper，  eg: <cache type="com.puhui.decision.cache.RedisCache"></cache>
+*/
+public final class RedisCache implements Cache {
+    private static Logger logger = LoggerFactory.getLogger(RedisCache.class);
+
+    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
+
+    private String id;
+
+    private static  RedisTemplate<String, Object> redisTemplate = null;
+
+    public RedisCache(final String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Cache instances require an ID");
+        }
+        this.id = id;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public int getSize() {
+        return getHashOps().size(id).intValue();
+    }
+
+    @Override
+    public void putObject(final Object key, final Object value) {
+        getHashOps().put(id, key.toString(), value);
+    }
+
+    @Override
+    public Object getObject(final Object key) {
+        return getHashOps().get(id, key.toString());
+    }
+
+    @Override
+    public Object removeObject(final Object key) {
+        return getHashOps().delete(id ,key.toString());
+    }
+
+    @Override
+    public void clear() {
+        redisTemplate.delete(id);
+    }
+
+    @Override
+    public ReadWriteLock getReadWriteLock() {
+        return readWriteLock;
+    }
+
+    @Override
+    public String toString() {
+        return "Redis {" + id + "}";
+    }
+
+    private HashOperations getHashOps() {
+        if (redisTemplate == null) {
+            redisTemplate = SpringApplicationContextHolder.getBean("redisTemplateComm");
+        }
+        return redisTemplate.opsForHash();
+    }
+
+}
+
+2.在每个mapper文件里面进行
+添加即可
+<cache type="com.puhui.decision.cache.RedisCache"></cache>

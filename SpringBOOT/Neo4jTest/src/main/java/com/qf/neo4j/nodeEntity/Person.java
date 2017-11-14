@@ -38,27 +38,11 @@ public class Person {
         this.name = name;
     }
 
-    /**
-     * 获取 age
-     *
-     * @return age
-     */
-    public int getAge() {
-        return age;
-    }
 
-    /**
-     * 设置 age
-     */
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     @GraphId
     Long id;
 
     String name;
 
-    @Property(name="age")
-    int age;
 }

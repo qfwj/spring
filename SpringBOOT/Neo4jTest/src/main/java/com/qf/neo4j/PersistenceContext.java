@@ -39,8 +39,12 @@ public class PersistenceContext {
     public org.neo4j.ogm.config.Configuration configuration() {
         org.neo4j.ogm.config.Configuration config = new org.neo4j.ogm.config.Configuration();
         config.driverConfiguration()
-                .setDriverClassName("org.neo4j.ogm.drivers.http.driver.HttpDriver")
-                .setURI("http://neo4j:hanlei128@192.168.239.128:7474");
+                .setDriverClassName("org.neo4j.ogm.drivers.bolt.driver.BoltDriver") //使用的是https请求
+                .setURI("bolt://neo4j:hanlei128@192.168.239.128:7474")
+                .setConnectionPoolSize(150)
+                //.setDriverClassName("org.neo4j.ogm.drivers.http.driver.HttpDriver") //使用的http请求
+               // .setURI("http://neo4j:hanlei128@192.168.239.128:7474")
+                .setConnectionPoolSize(150);
         return config;
     }
 }

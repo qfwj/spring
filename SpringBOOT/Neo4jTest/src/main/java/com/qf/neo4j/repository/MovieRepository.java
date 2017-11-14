@@ -5,6 +5,8 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Set;
+
 /**
  * @ClassName: CompanyRepository
  * @Description:
@@ -15,7 +17,8 @@ import org.springframework.data.repository.query.Param;
 public interface MovieRepository extends GraphRepository<Movie> {
 
 
-    @Query("MATCH (movie:movie {title:{title}}) RETURN movie")
+   /* @Query("MATCH (movie:movie {title:{title}}) RETURN movie")*/
     /*@Query("match(n:person) return n")*/
-    Movie getPersonByName(@Param("title") String title);
+
+    Movie getByTitle(@Param("title") String title);
 }

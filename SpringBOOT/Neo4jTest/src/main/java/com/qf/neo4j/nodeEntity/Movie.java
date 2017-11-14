@@ -8,6 +8,7 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,8 +25,25 @@ public class Movie {
     Long id;
     String title;
 
+
+    /**
+     * 获取 director
+     *
+     * @return director
+     */
+    public List<Person> getDirector() {
+        return director;
+    }
+
+    /**
+     * 设置 director
+     */
+    public void setDirector(List<Person> director) {
+        this.director = director;
+    }
+
     @Relationship(type = "从属", direction = Relationship.OUTGOING)
-    Person director;
+    List<Person> director;
 
     /**
      * 获取 title
@@ -43,21 +61,8 @@ public class Movie {
         this.title = title;
     }
 
-    /**
-     * 获取 director
-     *
-     * @return director
-     */
-    public Person getDirector() {
-        return director;
-    }
 
-    /**
-     * 设置 director
-     */
-    public void setDirector(Person director) {
-        this.director = director;
-    }
+
 
 /*    *//**
      * 获取 actors

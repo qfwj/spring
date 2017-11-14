@@ -10,6 +10,8 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @ClassName: PersonRepository
  * @Description:
@@ -23,6 +25,19 @@ public interface PersonRepository extends GraphRepository<Person> {
 
     /*@Query("match(n:person) return n")*/
     Person getPersonByName(@Param("name") String name);
+    @Query("match(n:grandfather)-[r *1..2]-(m) return n,m,r")
+    List<Person> getGrandfather(@Param("name") String name);
+
+    @Query("match(n:father)-[r *1..2]-(m) return n,m,r")
+    List<Person> getFatherby(@Param("name") String name);
+
+    @Query("match(n:wife)-[r *1..2]-(m) return n,m,r")
+    List<Person> getwifeby(@Param("name") String name);
+
+    @Query("match(n:son)-[r *1..2]-(m) return n,m,r")
+    List<Person> getsonby(@Param("name") String name);
+
+    //Person findByNameAndAge(String name, int age);
 
     @Query("MATCH (user:person {name:{name}}) delete user")
 
