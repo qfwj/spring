@@ -8,6 +8,11 @@ import com.qf.neo4j.nodeEntity.Movie;
 import com.qf.neo4j.nodeEntity.Person;
 import com.qf.neo4j.repository.MovieRepository;
 import com.qf.neo4j.repository.PersonRepository;
+import org.neo4j.driver.internal.InternalNode;
+import org.neo4j.driver.internal.InternalPath;
+import org.neo4j.driver.internal.InternalRelationship;
+import org.neo4j.ogm.response.model.QueryResultModel;
+import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @ClassName: NewController
@@ -36,6 +38,9 @@ public class NewController {
     @Autowired
     NewService newService;
 
+    @Autowired
+    Session session;
+
 
 
     /**
@@ -49,7 +54,7 @@ public class NewController {
      */
     @RequestMapping(value = "newperson", method = RequestMethod.GET)
     public String newPerson(String name) {
-
+        queryAndResolverRelaByNode("father");
         List list = personRepository.getGrandfather("");
 
 
@@ -117,4 +122,76 @@ public class NewController {
 
         return newService.set(title);
     }
+
+    private Map queryAndResolverRelaByNode(String name) {
+        String cypher_rela;
+//        String cypher_rela = "MATCH r=(:" + status + "{code:'" + code + "'})-[:" + status + "*]->() RETURN r";
+       /* String cypher_rela = "MATCH r=({code:'" + name + "', status:'" + status + "'})-[:" + status + "*]->() RETURN r";*/
+        //如果是实时的话，需要从neo4j取发布和未发布状态的所有关系
+        //将此结点出去的，和进来的关系合并返回
+        cypher_rela = "MATCH ps=()-[*]->({code:'" + name + "'}) RETURN ps as p UNION ALL MATCH ps2=()<-[*]-({name:'" + name + "'}) RETURN ps2 as p";
+
+        QueryResultModel _neoEntity = (QueryResultModel) session.query(cypher_rela, new HashMap<>());
+        Set _nodes = nodesResolver(_neoEntity);
+        Set _relas = relasResolver(_neoEntity);
+        Map _obj = new HashMap();
+        _obj.put("nodes", _nodes);
+        _obj.put("relationships", _relas);
+        return _obj;
+    }
+
+    private Set nodesResolver(Iterable<Map<String, Object>> queryResults) {
+        Set nodes = new HashSet();
+
+        if (null == queryResults) {
+            return nodes;
+        }
+        queryResults.forEach((map) -> {
+            map.entrySet().forEach((entry) -> {
+                InternalPath internalPath = (InternalPath) entry.getValue();
+                internalPath.nodes().forEach((n) -> {
+                    Map node = new HashMap();
+                    InternalNode _n = (InternalNode) n;
+                    node.put("id", _n.id());
+                    node.put("labels", _n.labels());
+                    node.put("properties", _n.asMap());
+                    if (null != _n.asMap()) {
+                        if (null != _n.asMap().get("version")) {
+                            //加一个索引字段，用来搜索code加version
+                            node.put("idx", _n.asMap().get("code").toString() + "v" + _n.asMap().get("version").toString());
+                        } else {
+                            //加一个索引字段，用来搜索code加version
+                            node.put("idx", _n.asMap().get("code").toString());
+                        }
+                    }
+                    nodes.add(node);
+                });
+            });
+        });
+        return nodes;
+
+    }
+
+    private Set relasResolver(Iterable<Map<String, Object>> queryResults) {
+        Set relas = new HashSet();
+
+        queryResults.forEach((map) -> {
+            map.entrySet().forEach((entry) -> {
+                InternalPath internalPath = (InternalPath) entry.getValue();
+                internalPath.relationships().forEach(r -> {
+                    InternalRelationship _r = (InternalRelationship) r;
+                    Map rela = new HashMap();
+                    rela.put("id", _r.id());
+                    rela.put("start", _r.startNodeId());
+                    rela.put("end", _r.endNodeId());
+                    rela.put("type", _r.type());
+                    relas.add(rela);
+                });
+            });
+        });
+
+        return relas;
+
+    }
+
 }
