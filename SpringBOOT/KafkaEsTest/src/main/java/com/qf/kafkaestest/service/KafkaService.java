@@ -2,7 +2,7 @@
  * Copyright(c) 2013-2017 by Puhuifinance Inc.
  * All Rights Reserved
  */
-package com.qf.kafkaestest;
+package com.qf.kafkaestest.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;

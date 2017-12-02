@@ -2,7 +2,7 @@
  * Copyright(c) 2013-2017 by Puhuifinance Inc.
  * All Rights Reserved
  */
-package com.qf.kafkaestest;
+package com.qf.kafkaestest.config;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,35 +40,3 @@ public class KafkaConfig {
     }
 }
 
-@ConfigurationProperties(prefix = "kafka")
-class KafkaProperties{
-
-    private String broker;
-    private String topic;
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    private String group;
-
-    public String getBroker() {
-        return broker;
-    }
-
-    public void setBroker(String broker) {
-        this.broker = broker;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-}

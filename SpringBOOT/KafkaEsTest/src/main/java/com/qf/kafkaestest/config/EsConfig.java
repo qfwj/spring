@@ -2,7 +2,7 @@
  * Copyright(c) 2013-2017 by Puhuifinance Inc.
  * All Rights Reserved
  */
-package com.qf.kafkaestest;
+package com.qf.kafkaestest.config;
 
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -13,7 +13,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.awt.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -43,33 +42,3 @@ public class EsConfig {
 }
 
 
-@ConfigurationProperties(prefix = "es")
-class EsProperties{
-    private String host;
-    private String index;
-    private String clustername;
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getIndex() {
-        return index;
-    }
-
-    public void setIndex(String index) {
-        this.index = index;
-    }
-
-    public String getClustername() {
-        return clustername;
-    }
-
-    public void setClustername(String clustername) {
-        this.clustername = clustername;
-    }
-}
