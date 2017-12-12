@@ -12,7 +12,11 @@ package com.qf.kafkaestest.constant;
  * @Copyright: 2017 . All rights reserved.
  */
 public class EsConstant {
-    public static final String TYPE ="type";
-    public static final String PARENT ="parant";
-    public static final String ESUNIQUEID ="esuniqueid";
+    public static final String TYPE = "type";
+    public static final String DOCUMENTID = "id";
+    public static final String PARENT = "parentPid";
+    public static final String PARENT_EMPTY = "null";
+    public static final String ESDATA = "data";
+    public static final String TRACEID = "traceId";
+    public static final String ESUNIQUEID = "esUniqueId.keyword";
 }

@@ -8,9 +8,10 @@ package com.qf.kafkaestest.constant;
  * @Copyright: 2017 . All rights reserved.
  */
 public enum EsEnum {
-    PROCESS("processes"),MODELS("models");
-    public String name;
-    EsEnum(String name){
-        this.name = name;
+    PROCESS("processes"), MODELS("models");
+    public String strName;
+
+    EsEnum(String strName) {
+        this.strName = strName;
     }
 }

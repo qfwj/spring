@@ -8,9 +8,10 @@ package com.qf.kafkaestest.constant;
  * @Copyright: 2017 . All rights reserved.
  */
 public enum KafkaEnum {
-    innerTreeModels("innerTreeModels"),PROCESSES("processes"),RULEMODELS("ruleModels"),TREEMODELS("treeModels");
-    String name;
-    KafkaEnum(String name) {
-        this.name = name;
+    GBDTMODELS("gbdtModels"), PROCESSES("processes"), RULEMODELS("ruleModels"), TREEMODELS("treeModels"), PYTHONMODELS("pythonModels");
+    public String strName;
+
+    KafkaEnum(String strName) {
+        this.strName = strName;
     }
 }

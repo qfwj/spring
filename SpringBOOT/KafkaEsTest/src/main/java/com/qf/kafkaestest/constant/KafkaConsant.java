@@ -12,7 +12,10 @@ package com.qf.kafkaestest.constant;
  * @Copyright: 2017 . All rights reserved.
  */
 public class KafkaConsant {
-    public static final String LOGTYPE = "logtype";
-    public static final String INPUT = "logtype";
+    public static final String LOGTYPE = "logType";
+    public static final String PESID = "pEsId";
+    public static final String MODLEDOCUMENTID = "id";
+    public static final String PROCESSDOCUMENTID = "esId";
+    public static final String ESUNIQUEID = "esUniqueId";
 
 }
