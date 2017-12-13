@@ -4,16 +4,18 @@
  */
 package com.qf.kafkastreams.testkafkastreams.service;
 
+import com.qf.kafkastreams.testkafkastreams.mapper.TestMapper;
+import com.qf.kafkastreams.testkafkastreams.processor.TestProcessor;
+import com.qf.kafkastreams.testkafkastreams.transformer.TestTransformer;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.KTable;
-import org.apache.kafka.streams.kstream.Materialized;
-import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.processor.Processor;
+import org.apache.kafka.streams.processor.ProcessorSupplier;
 import org.apache.kafka.streams.state.KeyValueStore;
 
 import java.util.Arrays;
@@ -36,17 +38,46 @@ public class WordsCountService {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-       /* builder.stream("test").to("testlogstash");*/
-        KStream<String, String> textLines = builder.stream("test");
-        KTable<String, Long> wordCounts = textLines
-                .flatMapValues(textLine -> Arrays.asList(textLine.toLowerCase().split("\\W+")))
-                .groupBy((key, word) -> word)
-                .count("count");
-        wordCounts.toStream().to("testlogstash", Produced.with(Serdes.String(), Serdes.Long()));
+       /*这个是直来直去的
+       *
+       * */
 
+       //builder.stream("input-topic").to("output-topic");
+
+
+       /*这个是使用ValueMapper的apply进行处理
+       * 目前只针对业务做相应的转换
+       * */
+/*        KStream<String, String> textLines = builder.stream("test");
+        KStream<String, Object> wordCounts = textLines
+                .flatMapValues(new ValueMapper<String, Iterable<String>>() {
+          public  Iterable<String> apply(String value) {
+              System.out.println(value);
+              return  Arrays.asList(value.replace(",","@#$"));
+            }
+        });
+        wordCounts = textLines.flatMapValues( new TestMapper());
+        wordCounts.to("testlogstash");
         KafkaStreams streams = new KafkaStreams(builder.build(), config);
-        streams.start();
+        streams.start();*/
+
+
+        /*使用transform来进行处理
+        *
+        *
+        *
+        * */
+
+        KStream<String, String> textLines1 = builder.stream("test");
+        textLines1 =  textLines1.transformValues(new ValueTransformerSupplier<String, String>(){
+            public ValueTransformer get(){
+                return new TestTransformer();
+            }
+        } );
+        textLines1.to("testlogstash");
         Topology topology = builder.build();
         System.out.println(topology.describe());
+        KafkaStreams streams = new KafkaStreams(builder.build(), config);
+        streams.start();
     }
 }
