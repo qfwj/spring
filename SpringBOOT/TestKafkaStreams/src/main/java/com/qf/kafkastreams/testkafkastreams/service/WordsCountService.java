@@ -48,7 +48,7 @@ public class WordsCountService {
        /*这个是使用ValueMapper的apply进行处理
        * 目前只针对业务做相应的转换
        * */
-/*        KStream<String, String> textLines = builder.stream("test");
+        KStream<String, String> textLines = builder.stream("test");
         KStream<String, Object> wordCounts = textLines
                 .flatMapValues(new ValueMapper<String, Iterable<String>>() {
           public  Iterable<String> apply(String value) {
@@ -59,7 +59,7 @@ public class WordsCountService {
         wordCounts = textLines.flatMapValues( new TestMapper());
         wordCounts.to("testlogstash");
         KafkaStreams streams = new KafkaStreams(builder.build(), config);
-        streams.start();*/
+        streams.start();
 
 
         /*使用transform来进行处理
@@ -77,7 +77,7 @@ public class WordsCountService {
         textLines1.to("testlogstash");
         Topology topology = builder.build();
         System.out.println(topology.describe());
-        KafkaStreams streams = new KafkaStreams(builder.build(), config);
+        streams = new KafkaStreams(builder.build(), config);
         streams.start();
     }
 }
