@@ -8,7 +8,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-@SpringBootApplication
 public class ScheduletestApplication {
 
 
@@ -25,10 +24,15 @@ public class ScheduletestApplication {
 						}
 					}
 					, i );
-			ScheduledFuture sss = scheduledExecutor.scheduleAtFixedRate(task, 5, 1, TimeUnit.SECONDS);
+			ScheduledFuture sss = scheduledExecutor.scheduleAtFixedRate(task, 900, 3, TimeUnit.SECONDS);
+			ScheduledFuture sss2 = scheduledExecutor.scheduleAtFixedRate(new Runnable() {
+				@Override
+				public void run() {
+					System.out.println("test2");
+				}
+			}, 600, 2, TimeUnit.SECONDS);
 			Thread.sleep(8000);
 			//sss.cancel(true);
 
-		SpringApplication.run(ScheduletestApplication.class, args);
 	}
 }
